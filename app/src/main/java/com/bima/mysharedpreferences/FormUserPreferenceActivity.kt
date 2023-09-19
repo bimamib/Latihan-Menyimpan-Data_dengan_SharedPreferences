@@ -11,6 +11,7 @@ import com.bima.mysharedpreferences.databinding.ActivityFormUserPreferenceBindin
 
 class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
 
+    private lateinit var binding: ActivityFormUserPreferenceBinding
     companion object {
         const val EXTRA_TYPE_FORM = "extra_type_form"
         const val EXTRA_RESULT = "extra_result"
@@ -26,7 +27,6 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var userModel: UserModel
 
-    private lateinit var binding: ActivityFormUserPreferenceBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
