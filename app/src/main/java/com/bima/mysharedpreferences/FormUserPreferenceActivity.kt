@@ -27,13 +27,48 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var userModel: UserModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFormUserPreferenceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnSave.setOnClickListener(this)
+
+        userModel = intent.getParcelableExtra<UserModel>("USER") as UserModel
+        val formType = intent.getIntExtra(EXTRA_TYPE_FORM, 0)
+
+        var actionBarTitle = ""
+        var btnTitle = ""
+
+        when (formType) {
+            TYPE_ADD -> {
+                actionBarTitle = "Tambah Baru"
+                btnTitle = "Simpan"
+            }
+
+            TYPE_EDIT -> {
+                actionBarTitle = "Ubah"
+                btnTitle = "Update"
+                showPreferenceInForm()
+            }
+        }
+
+        supportActionBar?.title = actionBarTitle
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding.btnSave.text = btnTitle
+    }
+
+    private fun showPreferenceInForm() {
+        binding.edtName.setText(userModel.name)
+        binding.edtEmail.setText(userModel.email)
+        binding.edtAge.setText(userModel.age.toString())
+        binding.edtPhone.setText(userModel.phoneNumber)
+        if (userModel.isLove) {
+            binding.rbYes.isChecked = true
+        } else {
+            binding.rbNo.isChecked = true
+        }
     }
 
     override fun onClick(view: View) {
@@ -81,42 +116,6 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
             setResult(RESULT_CODE, resultIntent)
 
             finish()
-        }
-
-        userModel = intent.getParcelableExtra<UserModel>("USER") as UserModel
-        val formType = intent.getIntExtra(EXTRA_TYPE_FORM, 0)
-
-        var actionBarTitle = ""
-        var btnTitle = ""
-
-        when (formType) {
-            TYPE_ADD -> {
-                actionBarTitle = "Tambah Baru"
-                btnTitle = "Simpan"
-            }
-
-            TYPE_EDIT -> {
-                actionBarTitle = "Ubah"
-                btnTitle = "Update"
-                showPreferenceInForm()
-            }
-        }
-
-        supportActionBar?.title = actionBarTitle
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        binding.btnSave.text = btnTitle
-    }
-
-    private fun showPreferenceInForm() {
-        binding.edtName.setText(userModel.name)
-        binding.edtEmail.setText(userModel.email)
-        binding.edtAge.setText(userModel.age.toString())
-        binding.edtPhone.setText(userModel.phoneNumber)
-        if (userModel.isLove) {
-            binding.rbYes.isChecked = true
-        } else {
-            binding.rbNo.isChecked = true
         }
     }
 
