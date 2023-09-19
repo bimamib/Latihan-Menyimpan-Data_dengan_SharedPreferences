@@ -81,6 +81,25 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
 
             finish()
         }
+
+        userModel = intent.getParcelableExtra<UserModel>("USER") as UserModel
+        val formType = intent.getIntExtra(EXTRA_TYPE_FORM, 0)
+        var actionBarTitle = ""
+        var btnTitle = ""
+        when (formType) {
+            TYPE_ADD -> {
+                actionBarTitle = "Tambah Baru"
+                btnTitle = "Simpan"
+            }
+            TYPE_EDIT -> {
+                actionBarTitle = "Ubah"
+                btnTitle = "Update"
+                showPreferenceInForm()
+            }
+        }
+        supportActionBar?.title = actionBarTitle
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.btnSave.text = btnTitle
     }
 
     private fun saveUser(name: String, email: String, age: String, phoneNo: String, isLoveMU: Boolean) {
