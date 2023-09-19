@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/name" />
 
     <TextView
@@ -20,13 +21,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         tools:text="@string/dummy_name" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/email" />
 
     <TextView
@@ -35,13 +37,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         tools:text="@string/dummy_email" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/phone_number" />
 
     <TextView
@@ -50,13 +53,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         tools:text="@string/dummynumber" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/age" />
 
     <TextView
@@ -65,13 +69,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         tools:text="@string/dummyage" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/love_manchester_united" />
 
     <TextView
@@ -80,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         tools:text="@string/dummyislove" />
 
     <Button
@@ -88,5 +93,6 @@
         style="@style/Base.Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/save" />
 </LinearLayout>
