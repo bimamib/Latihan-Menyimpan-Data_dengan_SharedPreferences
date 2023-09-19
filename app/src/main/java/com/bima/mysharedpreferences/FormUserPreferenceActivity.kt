@@ -84,25 +84,48 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
 
         userModel = intent.getParcelableExtra<UserModel>("USER") as UserModel
         val formType = intent.getIntExtra(EXTRA_TYPE_FORM, 0)
+
         var actionBarTitle = ""
         var btnTitle = ""
+
         when (formType) {
             TYPE_ADD -> {
                 actionBarTitle = "Tambah Baru"
                 btnTitle = "Simpan"
             }
+
             TYPE_EDIT -> {
                 actionBarTitle = "Ubah"
                 btnTitle = "Update"
                 showPreferenceInForm()
             }
         }
+
         supportActionBar?.title = actionBarTitle
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         binding.btnSave.text = btnTitle
     }
 
-    private fun saveUser(name: String, email: String, age: String, phoneNo: String, isLoveMU: Boolean) {
+    private fun showPreferenceInForm() {
+        binding.edtName.setText(userModel.name)
+        binding.edtEmail.setText(userModel.email)
+        binding.edtAge.setText(userModel.age.toString())
+        binding.edtPhone.setText(userModel.phoneNumber)
+        if (userModel.isLove) {
+            binding.rbYes.isChecked = true
+        } else {
+            binding.rbNo.isChecked = true
+        }
+    }
+
+    private fun saveUser(
+        name: String,
+        email: String,
+        age: String,
+        phoneNo: String,
+        isLoveMU: Boolean
+    ) {
         val userPreference = UserPreference(this)
 
         userModel.name = name
@@ -114,6 +137,7 @@ class FormUserPreferenceActivity : AppCompatActivity(), View.OnClickListener {
         userPreference.setUser(userModel)
         Toast.makeText(this, "Data tersimpan", Toast.LENGTH_SHORT).show()
     }
+
     private fun isValidEmail(email: CharSequence): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
