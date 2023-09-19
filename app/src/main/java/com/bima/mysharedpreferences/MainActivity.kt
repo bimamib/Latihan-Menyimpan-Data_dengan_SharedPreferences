@@ -1,10 +1,14 @@
 package com.bima.mysharedpreferences
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import com.bima.mysharedpreferences.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mUserPreference: UserPreference
 
@@ -12,6 +16,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userModel: UserModel
 
     private lateinit var binding: ActivityMainBinding
+
+    private val resultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.data != null && result.resultCode == FormUserPreferenceActivity.RESULT_CODE) {
+            userModel =
+                result.data?.getParcelableExtra<UserModel>(FormUserPreferenceActivity.EXTRA_RESULT) as UserModel
+            populateView(userModel)
+            checkForm(userModel)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +38,32 @@ class MainActivity : AppCompatActivity() {
         mUserPreference = UserPreference(this)
 
         showExistingPreference()
+
+        binding.btnSave.setOnClickListener(this)
+    }
+
+    override fun onClick(view: View) {
+        if (view.id == R.id.btn_save) {
+            val intent = Intent(this@MainActivity, FormUserPreferenceActivity::class.java)
+            when {
+                isPreferenceEmpty -> {
+                    intent.putExtra(
+                        FormUserPreferenceActivity.EXTRA_TYPE_FORM,
+                        FormUserPreferenceActivity.TYPE_ADD
+                    )
+                    intent.putExtra("USER", userModel)
+                }
+
+                else -> {
+                    intent.putExtra(
+                        FormUserPreferenceActivity.EXTRA_TYPE_FORM,
+                        FormUserPreferenceActivity.TYPE_EDIT
+                    )
+                    intent.putExtra("USER", userModel)
+                }
+            }
+            resultLauncher.launch(intent)
+        }
     }
 
     private fun showExistingPreference() {
@@ -32,11 +73,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun populateView(userModel: UserModel) {
-        binding.tvName.text = if (userModel.name.toString().isEmpty()) "Tidak Ada" else userModel.name
-        binding.tvAge.text = if (userModel.age.toString().isEmpty()) "Tidak Ada" else userModel.age.toString()
+        binding.tvName.text =
+            if (userModel.name.toString().isEmpty()) "Tidak Ada" else userModel.name
+        binding.tvAge.text =
+            if (userModel.age.toString().isEmpty()) "Tidak Ada" else userModel.age.toString()
         binding.tvIsLoveMu.text = if (userModel.isLove) "Ya" else "Tidak"
-        binding.tvEmail.text = if (userModel.email.toString().isEmpty()) "Tidak Ada" else userModel.email
-        binding.tvPhone.text = if (userModel.phoneNumber.toString().isEmpty()) "Tidak Ada" else userModel.phoneNumber
+        binding.tvEmail.text =
+            if (userModel.email.toString().isEmpty()) "Tidak Ada" else userModel.email
+        binding.tvPhone.text =
+            if (userModel.phoneNumber.toString().isEmpty()) "Tidak Ada" else userModel.phoneNumber
     }
 
     private fun checkForm(userModel: UserModel) {
@@ -45,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                 binding.btnSave.text = getString(R.string.change)
                 isPreferenceEmpty = false
             }
+
             else -> {
                 binding.btnSave.text = getString(R.string.save)
                 isPreferenceEmpty = true
